@@ -1,0 +1,57 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulated Double Color Ball Lottery</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="hero">
+        <div class="brand">Simulated Double Color Ball</div>
+        <div class="sub">Lightweight simulator with dark vibe and crisp draws.</div>
+      </header>
+
+      <main class="panel">
+        <section class="board">
+          <div class="board-head">
+            <h1>Draw Result</h1>
+            <div class="meta" id="draw-meta">No draw yet</div>
+          </div>
+          <div class="balls" id="current-balls" aria-live="polite"></div>
+          <div class="actions">
+            <button id="draw-once">Draw Once</button>
+            <button class="ghost" id="draw-five">Draw 5</button>
+            <button class="ghost" id="auto-toggle">Auto Draw</button>
+            <button class="ghost" id="clear-history">Clear</button>
+          </div>
+        </section>
+
+        <aside class="history">
+          <div class="history-head">
+            <h2>History</h2>
+            <div class="tiny" id="history-count">0 draws</div>
+          </div>
+          <div id="history-list" class="history-list"></div>
+        </aside>
+      </main>
+
+      <section class="rules">
+        <div class="rule">
+          <div class="label">Red Balls</div>
+          <div class="value">6 from 1-33</div>
+        </div>
+        <div class="rule">
+          <div class="label">Blue Ball</div>
+          <div class="value">1 from 1-16</div>
+        </div>
+        <div class="rule">
+          <div class="label">Mode</div>
+          <div class="value">Pure Random</div>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
