@@ -8,6 +8,9 @@ const autoToggleBtn = document.getElementById("auto-toggle");
 const clearHistoryBtn = document.getElementById("clear-history");
 const historyList = document.getElementById("history-list");
 const historyCount = document.getElementById("history-count");
+const totalDrawsEl = document.getElementById("total-draws");
+const hotRedEl = document.getElementById("hot-red");
+const hotBlueEl = document.getElementById("hot-blue");
 
 let drawIndex = 0;
 let autoTimer = null;
@@ -75,6 +78,41 @@ const renderHistory = () => {
   historyCount.textContent = `${history.length} draw${history.length === 1 ? "" : "s"}`;
 };
 
+const renderStats = () => {
+  totalDrawsEl.textContent = `${drawIndex}`;
+
+  if (history.length === 0) {
+    hotRedEl.textContent = "--";
+    hotBlueEl.textContent = "--";
+    return;
+  }
+
+  const redCounts = Array(34).fill(0);
+  const blueCounts = Array(17).fill(0);
+
+  history.forEach(({ draw }) => {
+    draw.reds.forEach((num) => {
+      redCounts[num] += 1;
+    });
+    blueCounts[draw.blue] += 1;
+  });
+
+  const pickHot = (counts) => {
+    let max = 0;
+    let candidate = 0;
+    for (let i = 1; i < counts.length; i += 1) {
+      if (counts[i] > max) {
+        max = counts[i];
+        candidate = i;
+      }
+    }
+    return max === 0 ? "--" : `${pad(candidate)} (${max}x)`;
+  };
+
+  hotRedEl.textContent = pickHot(redCounts);
+  hotBlueEl.textContent = pickHot(blueCounts);
+};
+
 const addDraw = () => {
   const draw = drawOne();
   drawIndex += 1;
@@ -88,6 +126,7 @@ const addDraw = () => {
 
   renderBalls(draw);
   renderHistory();
+  renderStats();
   drawMeta.textContent = `Draw #${drawIndex} at ${time}`;
 };
 
@@ -119,6 +158,7 @@ const clearHistory = () => {
   historyCount.textContent = "0 draws";
   drawMeta.textContent = "No draw yet";
   currentBalls.innerHTML = "";
+  renderStats();
 };
 
 const init = () => {
@@ -127,6 +167,7 @@ const init = () => {
   autoToggleBtn.addEventListener("click", toggleAuto);
   clearHistoryBtn.addEventListener("click", clearHistory);
 
+  renderStats();
   addDraw();
 };
 
